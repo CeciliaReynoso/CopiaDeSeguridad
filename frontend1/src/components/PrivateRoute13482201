@@ -1,0 +1,23 @@
+import { Navigate, Outlet } from 'react-router-dom';
+import { useContext } from 'react';
+import useAuth from '../hooks/useAuth';
+import RolesContext from '../contexts/RolesContext';
+
+const PrivateRoute = ({ allowedRoles }) => {
+  const { user } = useAuth();
+  const { cargo } = useContext(RolesContext);
+
+  if (!user) {
+    // Si no hay usuario autenticado, redirigir al login
+    return <Navigate to="/login" />;
+  }
+
+  if (allowedRoles && !allowedRoles.includes(cargo)) {
+    // Si los roles no coinciden, redirigir a no autorizado
+    return <Navigate to="/no-autorizado" />;
+  }
+
+  return <Outlet />;
+};
+
+export default PrivateRoute;

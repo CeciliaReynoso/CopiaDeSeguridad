@@ -1,0 +1,15 @@
+import React, { createContext, useState } from 'react';
+
+const RolesContext = createContext();
+
+export const RolesProvider = ({ children }) => {
+  const [cargo, setCargo] = useState(null);
+
+  return (
+    <RolesContext.Provider value={{ cargo, setCargo }}>
+      {children}
+    </RolesContext.Provider>
+  );
+};
+
+export default RolesContext;

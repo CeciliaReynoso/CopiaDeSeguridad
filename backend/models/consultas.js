@@ -22,9 +22,10 @@ const obtenerUsuarioPorId = async (id) => {
   return rows[0];
 };
 
-const registrarUsuario = async (email, password, rol, nombre, direccion) => {
+const registrarUsuario = async (email, password, nombre, direccion) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   const consulta = "INSERT INTO usuarios (email, password, rol, nombre, direccion) VALUES ($1, $2, $3, $4, $5) RETURNING *";
+  const rol = 'Cliente'; // Asignar siempre el rol 'Cliente'
   const values = [email, hashedPassword, rol, nombre, direccion];
   const result = await DB.query(consulta, values);
   return result.rows[0];
